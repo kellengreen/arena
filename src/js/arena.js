@@ -10,7 +10,10 @@ function Character(elem, type) {
 }
 
 Character.msDrawDelay = 80;
-Character.svgRoot = 'src/svg/characters/';
+
+Character.getImgPath = function(type, state, frame) {
+    return 'src/svg/characters/' + type + '/' + state + '/' + type + '_' + state + '_' + frame + '.svg';
+};
 
 Character.types = [
     'archer',
@@ -35,8 +38,7 @@ Character.prototype.draw = function() {
         this.frame = 0;
     }
     this.frame += 1;
-    this.elem.src = Character.svgRoot + this.type + '/' + this.state + '/' +
-                    this.type + '_' + this.state + '_' + this.frame + '.svg'
+    this.elem.src = Character.getImgPath(this.type, this.state, this.frame);
 };
 
 Character.prototype.attack = function() {
@@ -59,11 +61,23 @@ Character.prototype.support = function() {
     this.frame = 0;
 };
 
+// preload images
+Character.types.forEach(function(character) {
+    for (var state in Character.states) {
+        if (Character.states.hasOwnProperty(state)) {
+            var frames = Character.states[state];
+            for (var frame = 1; frame <= frames; frame++) {
+                new Image().src = Character.getImgPath(character, state, frame);
+            }
+        }
+    }
+});
+
 // init characters
 var characters = [];
-Character.types.forEach(function(item) {
-    var elem = document.querySelector('.' + item);
-    characters.push(new Character(elem, item));
+Character.types.forEach(function(character) {
+    var elem = document.querySelector('.' + character);
+    characters.push(new Character(elem, character));
 });
 
 // listeners
@@ -90,11 +104,3 @@ requestAnimationFrame(function draw() {
     }
     requestAnimationFrame(draw);
 });
-
-
-
-
-
-
-
-
