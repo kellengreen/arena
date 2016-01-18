@@ -13,7 +13,7 @@
         .character {
             height: 500px;
             width: 500px;
-            display: inline-block;
+            /*display: none;*/
         }
     </style>
 </head>
@@ -24,6 +24,8 @@
         <button value="damage">Take Damage</button>
         <button value="block">Block</button>
         <button value="support">Support</button>
+        <input class="speed" type="range" value="80" min="30" max="130" step="10">
+        <label class="speed--value">80ms</label>
     </div>
     <div class="characters">
         <img class="character archer">

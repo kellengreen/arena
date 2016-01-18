@@ -90,6 +90,11 @@ for (var i = 0, button; button = buttons[i]; i++) {
         });
     });
 }
+document.querySelector('.speed').addEventListener('change', function(event) {
+    var speed = event.target.value;
+    Character.msDrawDelay = speed;
+    document.querySelector('.speed--value').textContent = speed + 'ms';
+});
 
 // animation
 var lastDraw = Date.now();
